@@ -1,0 +1,67 @@
+package com.calculo.tempo.entities;
+
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+
+/**
+ * Classe com campos genericos para as entidades
+ * Possui métodos para atualização de data na criação e atualização do registro
+ *
+ * @author Tulio Viglione
+ *
+ */
+@MappedSuperclass
+public class Generics {
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long id;
+	
+	@Column(name = "DAT_INS", nullable = false)
+	private Date dataCriacao;
+
+	@Column(name = "DAT_ALT", nullable = false)
+	private Date dataAtualizacao;
+
+	/**
+	 * seta campo automaticamente no update
+	 */
+	@PreUpdate
+    public void preUpdate() {
+        dataAtualizacao = new Date();
+    }
+	
+	/**
+	 * seta campo automaticamente ao salvar
+	 */
+    @PrePersist
+    public void prePersist() {
+        final Date atual = new Date();
+        dataCriacao = atual;
+        dataAtualizacao = atual;
+    }
+
+    protected void setId(Long id) {
+    	this.id = id;
+    }
+    
+    public Long getId() {
+    	return id;
+    }
+    
+    public Date getDataCriacao() {
+    	return dataCriacao;
+    }
+    
+    public Date getDataAtualizacao() {
+    	return dataAtualizacao;
+    }
+
+}
