@@ -26,8 +26,12 @@ import com.calculo.tempo.security.dto.JwtAuthenticationDto;
 import com.calculo.tempo.security.dto.TokenDto;
 import com.calculo.tempo.security.utils.JwtTokenUtil;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("/api/auth")
+@Api("Autenticação sistema")
 public class AuthenticationController {
 
 	private static final Logger log = LoggerFactory.getLogger(AuthenticationController.class);
@@ -51,6 +55,7 @@ public class AuthenticationController {
 	 * @return ResponseEntity<Response<TokenDto>>
 	 */
 	@PostMapping
+	@ApiOperation(value = "Gera Token JWT", response = TokenDto.class, httpMethod = "POST")
 	public ResponseEntity<Response<TokenDto>> gerarTokenJwt(@Valid @RequestBody JwtAuthenticationDto authenticationDto,
 			BindingResult result) {
 		Response<TokenDto> response = new Response<>();
@@ -61,7 +66,7 @@ public class AuthenticationController {
 			return ResponseEntity.badRequest().body(response);
 		}
 
-		log.info("Gerando token para o email {}.", authenticationDto.getEmail());
+		log.debug("Gerando token para o email {}.", authenticationDto.getEmail());
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(authenticationDto.getEmail(), authenticationDto.getSenha()));
 		SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -80,8 +85,9 @@ public class AuthenticationController {
 	 * @return ResponseEntity<Response<TokenDto>>
 	 */
 	@PostMapping(value = "/refresh")
+	@ApiOperation(value = "Atualiza o token com uma nova data para expirar", response = JwtAuthenticationDto.class, httpMethod = "POST")
 	public ResponseEntity<Response<TokenDto>> gerarRefreshTokenJwt(HttpServletRequest request) {
-		log.info("Gerando refresh token JWT.");
+		log.debug("Gerando refresh token JWT.");
 		Response<TokenDto> response = new Response<>();
 		Optional<String> token = Optional.ofNullable(request.getHeader(TOKEN_HEADER));
 
