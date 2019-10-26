@@ -56,7 +56,7 @@ public class VideoServiceTest {
 
 	private Long ajustaTempo(Long timestamp) {
 		Timestamp data = new Timestamp(timestamp);
-		LocalDateTime aux = data.toLocalDateTime().minusSeconds(61);
+		LocalDateTime aux = data.toLocalDateTime().minusSeconds(62);
 		return aux.atZone(ZoneId.of("America/Sao_Paulo")).toInstant().toEpochMilli();
 	}
 
