@@ -19,14 +19,14 @@ public class JwtUserDetailsServiceImpl implements UserDetailsService {
 	private UsuarioService usuarioService;
 
 	@Override
-	public UserDetails loadUserByUsername(String email) {
-		Optional<Usuario> usuario = usuarioService.findByEmail(email);
+	public UserDetails loadUserByUsername(String login) {
+		Optional<Usuario> usuario = usuarioService.findLogin(login);
 
 		if (usuario.isPresent()) {
 			return JwtUserFactory.create(usuario.get());
 		}
 
-		throw new UsernameNotFoundException("Email não encontrado.");
+		throw new UsernameNotFoundException("Login não encontrado.");
 	}
 
 }

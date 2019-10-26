@@ -66,12 +66,12 @@ public class AuthenticationController {
 			return ResponseEntity.badRequest().body(response);
 		}
 
-		log.debug("Gerando token para o email {}.", authenticationDto.getEmail());
+		log.debug("Gerando token para o login {}.", authenticationDto.getLogin());
 		Authentication authentication = authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(authenticationDto.getEmail(), authenticationDto.getSenha()));
+				new UsernamePasswordAuthenticationToken(authenticationDto.getLogin(), authenticationDto.getSenha()));
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 
-		UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationDto.getEmail());
+		UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationDto.getLogin());
 		String token = jwtTokenUtil.obterToken(userDetails);
 		response.setData(new TokenDto(token));
 

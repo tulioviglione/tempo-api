@@ -10,12 +10,12 @@ import com.calculo.tempo.entities.Usuario;
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
 	/**
-	 * busca usuario por e-mail
+	 * busca usuario por login
 	 * 
-	 * @param email
+	 * @param login
 	 * @return
 	 */
 	@Transactional(readOnly = true)
-	Optional<Usuario> findByEmail(String email);
+	Optional<Usuario> findByLogin(String login);
 
 }

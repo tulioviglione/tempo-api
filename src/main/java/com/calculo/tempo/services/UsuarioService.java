@@ -7,12 +7,12 @@ import com.calculo.tempo.entities.Usuario;
 public interface UsuarioService {
 
 	/**
-	 * Filtra usuario por e-mail
+	 * Filtra usuario por login
 	 * 
-	 * @param email
+	 * @param login
 	 * @return
 	 */
-	Optional<Usuario> findByEmail(String email);
+	Optional<Usuario> findLogin(String login);
 
 	/**
 	 * Salva novo Usuario

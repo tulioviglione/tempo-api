@@ -5,17 +5,17 @@ import javax.validation.constraints.Size;
 
 public class JwtAuthenticationDto {
 
-	private String email;
+	private String login;
 	private String senha;
 
-	@NotNull(message = "{email.nulo}")
-	@Size(min = 1, message = "{email.vazio}")
-	public String getEmail() {
-		return email;
+	@NotNull(message = "{login.nulo}")
+	@Size(min = 1, message = "{login.vazio}")
+	public String getLogin() {
+		return login;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setLogin(String login) {
+		this.login = login;
 	}
 
 	@NotNull(message = "{senha.nulo}")
