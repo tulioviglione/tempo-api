@@ -21,7 +21,7 @@ public class Video extends Generics implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Column(name = "duracao", nullable = false)
+	@Column(name = "duracao", precision=10, scale=2, nullable = false)
 	private Double duracao;
 
 	@Column(name = "data", nullable = false)
