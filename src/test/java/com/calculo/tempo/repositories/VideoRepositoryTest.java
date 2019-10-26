@@ -34,8 +34,10 @@ public class VideoRepositoryTest {
 	}
 
 	private Double getDouble() {
+		double min = 200;
+		double max = 201;
 		Random r = new Random();
-		return r.nextDouble();
+		return min + (max - min) * r.nextDouble();
 	}
 	
 	

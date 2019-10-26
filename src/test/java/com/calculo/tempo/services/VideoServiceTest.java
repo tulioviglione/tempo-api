@@ -1,16 +1,10 @@
 package com.calculo.tempo.services;
 
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.sql.Timestamp;
 import java.text.ParseException;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Random;
-
-import javax.validation.constraints.NotNull;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -49,10 +43,17 @@ public class VideoServiceTest {
 		assertTrue(videoService.adicionaTempo(dto));
 
 	}
+	
+	@Test
+	public void TestCargaDados() {
+		videoService.populaBanco();
+	}
 
 	private Double getDouble() {
+		double min = 200;
+		double max = 201;
 		Random r = new Random();
-		return r.nextDouble();
+		return min + (max - min) * r.nextDouble();
 	}
 	
 }

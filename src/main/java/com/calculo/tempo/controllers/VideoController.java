@@ -33,7 +33,7 @@ public class VideoController {
 	
 	@PostMapping("/adicionaRegistro")
 	@ApiOperation(value = "Adiciona novo registro de tempo", httpMethod = "POST")
-	public ResponseEntity<Response<String>> adicionar(@Valid @RequestBody VideoDTO videoDto,
+	public ResponseEntity<Response<String>> adicionaRegistro(@Valid @RequestBody VideoDTO videoDto,
 			BindingResult result) {
 
 		log.debug("Cadastrando novo registro de tempo");
@@ -55,5 +55,23 @@ public class VideoController {
 		
 		response.setData("Registro cadastrado");
 		return ResponseEntity.ok(response);
+	}
+	
+	@PostMapping("/realizaCarga")
+	@ApiOperation(value = "Adiciona novo registro de tempo", httpMethod = "POST")
+	public ResponseEntity<Response<String>> populaBanco() {
+
+		log.debug("Cadastrandos novo registro no banco para teste");
+
+		Response<String> response = new Response<>();
+
+		try {
+			videoService.populaBanco();
+			response.setData("Registros cadastrados");
+			return ResponseEntity.ok(response);
+		} catch (Exception e) {
+			response.setData("Erro inesperado");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+		}
 	}
 }

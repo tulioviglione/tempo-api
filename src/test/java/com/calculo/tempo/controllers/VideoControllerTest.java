@@ -37,6 +37,13 @@ public class VideoControllerTest {
 	private VideoService videoService;
 	
 	@Test
+	public void testCarga() throws TempoException {
+		ResponseEntity<Object> responseEntity = this.restTemplate
+				.postForEntity("http://localhost:" + port + "/api/tempo/realizaCarga", null, Object.class);
+		assertEquals(200, responseEntity.getStatusCodeValue());
+	}
+	
+	@Test
 	public void testAddUsuario() throws TempoException {
 		VideoDTO dto = new VideoDTO();
 		dto.setDuracao(getDouble());
@@ -65,8 +72,10 @@ public class VideoControllerTest {
 	}
 
 	private Double getDouble() {
+		double min = 200;
+		double max = 201;
 		Random r = new Random();
-		return r.nextDouble();
+		return min + (max - min) * r.nextDouble();
 	}
 	
 }	

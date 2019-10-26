@@ -3,6 +3,7 @@ package com.calculo.tempo.services.impl;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Random;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +23,7 @@ public class VideoServiceImpl implements VideoService {
 
 	@Autowired
 	private VideoRepository videoRepository;
-
+	
 	@Override
 	public boolean adicionaTempo(VideoDTO dto) throws TempoException {
 		Video video = new Video();
@@ -40,6 +41,28 @@ public class VideoServiceImpl implements VideoService {
 	private synchronized void salvaRegistro(Video video) {
 		log.debug("Salvando registro Video");
 		videoRepository.save(video);
+	}
+
+	@Override
+	public void populaBanco() {
+		LocalDateTime dataInicial = LocalDateTime.now();
+		while(ChronoUnit.SECONDS.between(dataInicial, LocalDateTime.now()) <= 60) {
+			VideoDTO dto = new VideoDTO();
+			dto.setDuracao(getDouble());
+			dto.setTimestamp(System.currentTimeMillis());
+			try {
+				adicionaTempo(dto);
+			} catch (TempoException e) {
+				log.debug("Sem necessidade de tratar exceção, execução somente para carga no banco");
+			}
+		}
+	}
+
+	private Double getDouble() {
+		double min = 200;
+		double max = 201;
+		Random r = new Random();
+		return min + (max - min) * r.nextDouble();
 	}
 
 }
