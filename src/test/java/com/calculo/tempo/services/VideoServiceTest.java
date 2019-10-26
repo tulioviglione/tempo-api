@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.text.ParseException;
 import java.util.Random;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
@@ -33,6 +34,11 @@ public class VideoServiceTest {
 	@BeforeEach
 	public void setUp() throws Exception {
 		BDDMockito.given(this.videoRepository.save(Mockito.any(Video.class))).willReturn(new Video());
+	}
+	
+	@AfterEach 
+	public void limpaRegistros() {
+		videoService.apagaTodosRegistros();
 	}
 
 	@Test

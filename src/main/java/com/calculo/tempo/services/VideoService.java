@@ -7,5 +7,6 @@ public interface VideoService {
 
 	boolean adicionaTempo(VideoDTO video) throws TempoException ;
 	void populaBanco();
+	void apagaTodosRegistros();
 
 }

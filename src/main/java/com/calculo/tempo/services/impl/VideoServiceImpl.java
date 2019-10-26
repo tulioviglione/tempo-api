@@ -44,6 +44,11 @@ public class VideoServiceImpl implements VideoService {
 	}
 
 	@Override
+	public void apagaTodosRegistros() {
+		videoRepository.deleteAll();
+	}
+
+	@Override
 	public void populaBanco() {
 		LocalDateTime dataInicial = LocalDateTime.now();
 		while(ChronoUnit.SECONDS.between(dataInicial, LocalDateTime.now()) <= 60) {
@@ -64,5 +69,6 @@ public class VideoServiceImpl implements VideoService {
 		Random r = new Random();
 		return min + (max - min) * r.nextDouble();
 	}
+
 
 }
