@@ -48,16 +48,6 @@ public class VideoServiceTest {
 		dto.setTimestamp(System.currentTimeMillis());
 		assertTrue(videoService.adicionaTempo(dto));
 
-		assertThrows(TempoException.class, () -> {
-			dto.setTimestamp(ajustaTempo(dto.getTimestamp()));
-			videoService.adicionaTempo(dto);
-		});
-	}
-
-	private Long ajustaTempo(Long timestamp) {
-		Timestamp data = new Timestamp(timestamp);
-		LocalDateTime aux = data.toLocalDateTime().minusSeconds(70);
-		return aux.atZone(ZoneId.of("America/Sao_Paulo")).toInstant().toEpochMilli();
 	}
 
 	private Double getDouble() {
