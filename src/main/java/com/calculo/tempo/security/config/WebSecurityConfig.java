@@ -49,6 +49,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
+				.antMatchers(HttpMethod.POST, "/api/tempo/adicionaRegistro", "/api/tempo/realizaCarga").permitAll()
+				.antMatchers(HttpMethod.GET, "/api/tempo/**").permitAll()
 				.antMatchers(HttpMethod.GET, "/swagger-resources/**", "/swagger-ui.html", "/v2/api-docs", "/webjars/**").permitAll()
 				.antMatchers(HttpMethod.POST, "/api/usuarios/**", "/api/auth/**").permitAll().anyRequest()
 				.authenticated();
