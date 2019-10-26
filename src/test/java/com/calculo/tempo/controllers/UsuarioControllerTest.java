@@ -33,7 +33,7 @@ public class UsuarioControllerTest {
 	private UsuarioService usuarioService;
 	
 	@BeforeEach
-	private void executeService() {
+	private void setUp() {
 		BDDMockito.given(this.usuarioService.cadastraNovoUsuario(Mockito.any(Usuario.class))).willReturn(new Usuario());
 	}
 	
@@ -58,24 +58,3 @@ public class UsuarioControllerTest {
 	}
 	
 }	
-	
-//	@Autowired
-//	private MockMvc mvc;
-
-//	@MockBean
-//	private UsuarioService usuarioService;
-	
-//	@Test
-//	public void cadastraNovoUsuario() throws Exception {
-//		mvc.perform()
-//		BDDMockito.given(this.usuarioService.cadastraNovoUsuario(Mockito.any(Usuario.class))).willReturn(new Usuario());
-//
-//		mvc.perform(MockMvcRequestBuilders.post("/api/usuarios")
-//				.content("{\"login\": \"login\",\"senha\": \"12345678\"}")
-//				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
-//		
-//		mvc.perform(MockMvcRequestBuilders.post("/api/usuarios")
-//				.content("{\"login\": \"\",\"senha\": \"\"}")
-//				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
-//				.andExpect(status().isBadRequest()).andExpect(jsonPath("$.errors").isNotEmpty());
-//	}
