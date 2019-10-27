@@ -52,7 +52,7 @@ public class VideoServiceTest {
 	
 	@Test
 	public void TestCargaDados() {
-		videoService.populaBanco();
+		assertTrue(videoService.populaBanco());
 	}
 
 	private Double getDouble() {

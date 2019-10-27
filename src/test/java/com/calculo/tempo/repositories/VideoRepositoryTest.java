@@ -1,6 +1,8 @@
 package com.calculo.tempo.repositories;
 
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import java.sql.Timestamp;
 import java.util.Random;
 
@@ -24,7 +26,7 @@ public class VideoRepositoryTest {
 		Video video = new Video();
 		video.setDuracao(getDouble());
 		video.setData(new Timestamp(System.currentTimeMillis()));
-		this.videoRepository.save(video);
+		assertNotNull(this.videoRepository.save(video));
 	}
 
 

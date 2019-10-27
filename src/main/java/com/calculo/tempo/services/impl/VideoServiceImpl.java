@@ -24,6 +24,9 @@ public class VideoServiceImpl implements VideoService {
 	@Autowired
 	private VideoRepository videoRepository;
 	
+	private static Random r = new Random();
+	
+	
 	@Override
 	public boolean adicionaTempo(VideoDTO dto) throws TempoException {
 		Video video = new Video();
@@ -49,7 +52,7 @@ public class VideoServiceImpl implements VideoService {
 	}
 
 	@Override
-	public void populaBanco() {
+	public boolean populaBanco() {
 		LocalDateTime dataInicial = LocalDateTime.now();
 		while(ChronoUnit.SECONDS.between(dataInicial, LocalDateTime.now()) <= 60) {
 			VideoDTO dto = new VideoDTO();
@@ -61,12 +64,12 @@ public class VideoServiceImpl implements VideoService {
 				log.debug("Sem necessidade de tratar exceção, execução somente para carga no banco");
 			}
 		}
+		return true;
 	}
 
 	private Double getDouble() {
 		double min = 200;
 		double max = 201;
-		Random r = new Random();
 		return min + (max - min) * r.nextDouble();
 	}
 

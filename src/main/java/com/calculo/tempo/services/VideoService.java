@@ -6,7 +6,7 @@ import com.calculo.tempo.exceptions.TempoException;
 public interface VideoService {
 
 	boolean adicionaTempo(VideoDTO video) throws TempoException ;
-	void populaBanco();
+	boolean populaBanco();
 	void apagaTodosRegistros();
 
 }
