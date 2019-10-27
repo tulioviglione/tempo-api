@@ -1,9 +1,11 @@
 package com.calculo.tempo.services;
 
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.text.ParseException;
+import java.util.Date;
 import java.util.Random;
 
 import org.junit.jupiter.api.AfterEach;
@@ -16,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 
+import com.calculo.tempo.dtos.EstatisticasDTO;
 import com.calculo.tempo.dtos.VideoDTO;
 import com.calculo.tempo.entities.Video;
 import com.calculo.tempo.exceptions.TempoException;
@@ -34,6 +37,7 @@ public class VideoServiceTest {
 	@BeforeEach
 	public void setUp() throws Exception {
 		BDDMockito.given(this.videoRepository.save(Mockito.any(Video.class))).willReturn(new Video());
+		BDDMockito.given(this.videoRepository.findEstatisticaByData(Mockito.any(Date.class))).willReturn(new EstatisticasDTO());
 	}
 	
 	@AfterEach 
@@ -47,13 +51,18 @@ public class VideoServiceTest {
 		dto.setDuracao(getDouble());
 		dto.setTimestamp(System.currentTimeMillis());
 		assertTrue(videoService.adicionaTempo(dto));
-
+	}
+	
+	@Test
+	public void TestBuscaEstatistica() {
+		assertNotNull(videoService.buscaEstatistica());
 	}
 	
 	@Test
 	public void TestCargaDados() {
 		assertTrue(videoService.populaBanco());
 	}
+
 
 	private Double getDouble() {
 		double min = 200;

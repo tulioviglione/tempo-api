@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.calculo.tempo.dtos.EstatisticasDTO;
 import com.calculo.tempo.dtos.VideoDTO;
 import com.calculo.tempo.entities.Video;
 import com.calculo.tempo.exceptions.TempoException;
@@ -67,11 +68,15 @@ public class VideoServiceImpl implements VideoService {
 		return true;
 	}
 
+	@Override
+	public EstatisticasDTO buscaEstatistica() {
+		return videoRepository.findEstatisticaByData(Timestamp.valueOf(LocalDateTime.now().minusSeconds(60)));
+	}
+
 	private Double getDouble() {
 		double min = 200;
 		double max = 201;
 		return min + (max - min) * r.nextDouble();
 	}
-
 
 }
