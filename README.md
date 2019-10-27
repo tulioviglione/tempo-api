@@ -30,7 +30,7 @@ Somente o método DELETE exige um usuário autenticado no sistema para execuçã
 > Requisição Post
 > https://tempos-api.herokuapp.com/api/auth/
 
-````
+```
 {
   "login": "auxiliar",
   "senha": "12345678"
