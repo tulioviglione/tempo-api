@@ -8,6 +8,7 @@ import java.util.Random;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.calculo.tempo.dtos.EstatisticasDTO;
@@ -52,7 +53,7 @@ public class VideoServiceImpl implements VideoService {
 		videoRepository.deleteAll();
 	}
 
-	@Override
+	@Async
 	public boolean populaBanco() {
 		LocalDateTime dataInicial = LocalDateTime.now();
 		while(ChronoUnit.SECONDS.between(dataInicial, LocalDateTime.now()) <= 60) {

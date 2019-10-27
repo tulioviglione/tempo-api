@@ -69,7 +69,7 @@ public class VideoController {
 	}
 	
 	@PostMapping("/realizaCarga")
-	@ApiOperation(value = "Adiciona novo registro de tempo", httpMethod = "POST")
+	@ApiOperation(value = "Realiza carga de dados no sistema", httpMethod = "POST")
 	@ApiResponses(value = { 
 			@ApiResponse(code=200, message = "realizado carga de dados")
 	})
