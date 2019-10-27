@@ -1,7 +1,5 @@
 package com.calculo.tempo.controllers;
 
-import java.util.Arrays;
-
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -79,14 +77,9 @@ public class VideoController {
 
 		Response<String> response = new Response<>();
 
-		try {
-			videoService.populaBanco();
-			response.setData("realizado carga de dados");
-			return ResponseEntity.ok(response);
-		} catch (Exception e) {
-			response.setData("Erro inesperado");
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-		}
+		videoService.populaBanco();
+		response.setData("realizado carga de dados");
+		return ResponseEntity.ok(response);
 	}
 	
 	@DeleteMapping(value = "/")
@@ -99,13 +92,8 @@ public class VideoController {
 		
 		Response<String> response = new Response<>();
 		
-		try {
-			videoService.apagaTodosRegistros();
-			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
-		} catch (Exception e) {
-			response.setData("Erro ao limpar banco");
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-		}
+		videoService.apagaTodosRegistros();
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
 	}
 	
 	@GetMapping(value="/")
@@ -118,13 +106,8 @@ public class VideoController {
 		
 		Response<EstatisticasDTO> response = new Response<>();
 		
-		try {
-			response.setData(videoService.buscaEstatistica());
-			return ResponseEntity.ok(response);
-		} catch (Exception e) {
-			response.setErrors(Arrays.asList("Erro ao realizar pesquisa", e.getMessage()));
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-		}
+		response.setData(videoService.buscaEstatistica());
+		return ResponseEntity.ok(response);
 	}
 	
 }

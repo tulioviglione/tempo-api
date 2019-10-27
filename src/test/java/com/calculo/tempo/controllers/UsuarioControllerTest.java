@@ -32,20 +32,21 @@ public class UsuarioControllerTest {
 	@MockBean
 	private UsuarioService usuarioService;
 	
-	@BeforeEach
-	private void setUp() {
-		BDDMockito.given(this.usuarioService.cadastraNovoUsuario(Mockito.any(Usuario.class))).willReturn(new Usuario());
-	}
-	
 	@Test
 	public void testAddUsuario() {
 		UsuarioDTO dto = new UsuarioDTO();
 		dto.setLogin("login");
 		dto.setSenha("senha123");
 		
+		BDDMockito.given(this.usuarioService.cadastraNovoUsuario(Mockito.any(Usuario.class))).willReturn(new Usuario());
 		ResponseEntity<Object> responseEntity = this.restTemplate
 			.postForEntity("http://localhost:" + port + "/api/usuarios", dto, Object.class);
 		assertEquals(200, responseEntity.getStatusCodeValue());
+
+		BDDMockito.given(this.usuarioService.cadastraNovoUsuario(Mockito.any(Usuario.class))).willReturn(null);
+		responseEntity = this.restTemplate
+				.postForEntity("http://localhost:" + port + "/api/usuarios", dto, Object.class);
+		assertEquals(400, responseEntity.getStatusCodeValue());
 		
 		dto.setLogin(null);
 		responseEntity = this.restTemplate.postForEntity("http://localhost:" + port + "/api/usuarios", dto, Object.class);
