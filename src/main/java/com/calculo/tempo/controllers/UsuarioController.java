@@ -1,5 +1,7 @@
 package com.calculo.tempo.controllers;
 
+import java.util.Arrays;
+
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -45,8 +47,14 @@ public class UsuarioController {
 			return ResponseEntity.badRequest().body(response);
 		}
 
-		response.setData(new UsuarioDTO(this.usuarioService.cadastraNovoUsuario(new Usuario(usuarioDto))));
-		return ResponseEntity.ok(response);
+		Usuario usuario = this.usuarioService.cadastraNovoUsuario(new Usuario(usuarioDto));
+		if (usuario != null) {
+			response.setData(new UsuarioDTO(usuario));
+			return ResponseEntity.ok(response);
+		} else {
+			response.setErrors(Arrays.asList("Usuário já cadastrado no banco de dados"));
+			return ResponseEntity.badRequest().body(response);
+		}
 
 	}
 	

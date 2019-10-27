@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.calculo.tempo.entities.Usuario;
@@ -30,7 +31,12 @@ public class UsuarioServiceImpl implements UsuarioService {
 	public Usuario cadastraNovoUsuario(Usuario usuario) {
 		log.debug("cadastra novo usuario no sistema");
 		usuario.setSenha(PasswordUtils.gerarBCrypt(usuario.getSenha()));
-		return usuarioRepository.save(usuario);
+		try {
+			return usuarioRepository.save(usuario);
+		} catch (DataIntegrityViolationException e) {
+			log.debug("Usuário já cadastrado no banco");
+			return null;
+		}
 	}
 
 }
