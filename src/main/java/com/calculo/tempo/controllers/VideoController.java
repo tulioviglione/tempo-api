@@ -21,6 +21,8 @@ import com.calculo.tempo.services.VideoService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @RestController
 @RequestMapping("/api/tempo")
@@ -34,6 +36,11 @@ public class VideoController {
 	
 	@PostMapping("/adicionaRegistro")
 	@ApiOperation(value = "Adiciona novo registro de tempo", httpMethod = "POST")
+	@ApiResponses(value = { 
+			@ApiResponse(code = 200, message = "Registro cadastrado"),
+		    @ApiResponse(code = 204, message = "Data do registro menor que o esperado"),
+		    @ApiResponse(code = 400, message = "Erro validação registro")
+		      })
 	public ResponseEntity<Response<String>> adicionaRegistro(@Valid @RequestBody VideoDTO videoDto,
 			BindingResult result) {
 
@@ -42,7 +49,7 @@ public class VideoController {
 		Response<String> response = new Response<>();
 
 		if (result.hasErrors()) {
-			log.error("Erro Validação Usuário: {}", result.getAllErrors());
+			log.error("Erro Validação registro: {}", result.getAllErrors());
 			result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
 			return ResponseEntity.badRequest().body(response);
 		}
@@ -60,6 +67,9 @@ public class VideoController {
 	
 	@PostMapping("/realizaCarga")
 	@ApiOperation(value = "Adiciona novo registro de tempo", httpMethod = "POST")
+	@ApiResponses(value = { 
+			@ApiResponse(code=200, message = "realizado carga de dados")
+	})
 	public ResponseEntity<Response<String>> populaBanco() {
 
 		log.debug("Cadastrandos novo registro no banco para teste");
@@ -68,7 +78,7 @@ public class VideoController {
 
 		try {
 			videoService.populaBanco();
-			response.setData("Registros cadastrados");
+			response.setData("realizado carga de dados");
 			return ResponseEntity.ok(response);
 		} catch (Exception e) {
 			response.setData("Erro inesperado");
@@ -77,6 +87,11 @@ public class VideoController {
 	}
 	
 	@DeleteMapping(value = "/")
+	@ApiOperation(value = "Apaga todos os registros de tempo no banco", httpMethod = "DELETE")
+	@ApiResponses(value = { 
+			@ApiResponse(code=204, message = "Registros apagados")
+	})
+	@ApiResponse(code=204, message = "Registros apagados")
 	public ResponseEntity<Response<String>> limpaRegistros() {
 		log.debug("Apagando registros");
 		
