@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -17,6 +18,10 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "video")
+@NamedQuery(name = "Video.findEstatisticaByData",
+			query = "SELECT new com.calculo.tempo.dtos.EstatisticasDTO(sum(v.duracao), avg(v.duracao), max(v.duracao), min(v.duracao), count(v.duracao)) "
+				  + "FROM Video v "
+				  + "WHERE v.data >= :data ")
 public class Video extends Generics implements Serializable {
 
 	private static final long serialVersionUID = 1L;

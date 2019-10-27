@@ -4,6 +4,8 @@ package com.calculo.tempo.repositories;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Random;
 
 import org.junit.jupiter.api.AfterEach;
@@ -29,7 +31,13 @@ public class VideoRepositoryTest {
 		assertNotNull(this.videoRepository.save(video));
 	}
 
+	@Test
+	public void pesquisaRegistro() {
+		assertNotNull(this.videoRepository.findEstatisticaByData(Timestamp.valueOf(LocalDateTime.now().minusSeconds(60))));
+	}
 
+	
+	
 	@AfterEach
 	public final void tearDown() {
 		this.videoRepository.deleteAll();
