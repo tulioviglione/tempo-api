@@ -51,7 +51,7 @@ Aplicação possui funcionalidade caso deseje ser adicionado novos usuários
 }
 ```
 
-#### Métodos
+#### Funcionalidades
 
 ### Carga de dados na aplicação
 Requisição post realiza durante 60 segundo a carga de dados atualizada no sistema para teste.
