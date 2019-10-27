@@ -1,5 +1,7 @@
 package com.calculo.tempo.controllers;
 
+import java.util.Arrays;
+
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -9,11 +11,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.calculo.tempo.dtos.EstatisticasDTO;
 import com.calculo.tempo.dtos.VideoDTO;
 import com.calculo.tempo.exceptions.TempoException;
 import com.calculo.tempo.response.Response;
@@ -57,7 +61,6 @@ public class VideoController {
 		try {
 			videoService.adicionaTempo(videoDto);
 		} catch (TempoException e) {
-			response.setData("Registro não inserido");
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
 		}
 		
@@ -91,7 +94,6 @@ public class VideoController {
 	@ApiResponses(value = { 
 			@ApiResponse(code=204, message = "Registros apagados")
 	})
-	@ApiResponse(code=204, message = "Registros apagados")
 	public ResponseEntity<Response<String>> limpaRegistros() {
 		log.debug("Apagando registros");
 		
@@ -99,11 +101,30 @@ public class VideoController {
 		
 		try {
 			videoService.apagaTodosRegistros();
-			response.setData("Registros apagados");
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
 		} catch (Exception e) {
 			response.setData("Erro ao limpar banco");
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
 		}
 	}
+	
+	@GetMapping(value="/")
+	@ApiOperation(value = "busca estatistica com base nos ultimos 60 segundos", httpMethod = "GET")
+	@ApiResponses(value = { 
+			@ApiResponse(code=200, message="Pesquisa realizada")
+	})
+	public ResponseEntity<Response<EstatisticasDTO>> buscaEstatistica() {
+		log.debug("Realizando pesquisa");
+		
+		Response<EstatisticasDTO> response = new Response<>();
+		
+		try {
+			response.setData(videoService.buscaEstatistica());
+			return ResponseEntity.ok(response);
+		} catch (Exception e) {
+			response.setErrors(Arrays.asList("Erro ao realizar pesquisa", e.getMessage()));
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+		}
+	}
+	
 }

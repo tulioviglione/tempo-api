@@ -60,6 +60,13 @@ public class VideoControllerTest {
 				.postForEntity("http://localhost:" + port + "/api/tempo/realizaCarga", null, Object.class);
 		assertEquals(200, responseEntity.getStatusCodeValue());
 	}
+
+	@Test
+	public void realizaPesquisa() {
+		ResponseEntity<Object> responseEntity = this.restTemplate
+				.getForEntity("http://localhost:" + port + "/api/tempo/", null, Object.class);
+		assertEquals(200, responseEntity.getStatusCodeValue());
+	}
 	
 	@Test
 	@WithMockUser

@@ -8,6 +8,10 @@ public class EstatisticasDTO {
 	private Double min;
 	private Long count;
 	
+	public EstatisticasDTO() {
+		
+	}
+	
 	public EstatisticasDTO(Double sum, Double avg, Double max, Double min, Long count) {
 		super();
 		this.sum = sum;
