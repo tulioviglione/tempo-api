@@ -1,12 +1,13 @@
 package com.calculo.tempo.controllers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Random;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
 import org.mockito.Mockito;
@@ -17,7 +18,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import com.calculo.tempo.dtos.VideoDTO;
 import com.calculo.tempo.exceptions.TempoException;
@@ -36,6 +41,19 @@ public class VideoControllerTest {
 	@MockBean
 	private VideoService videoService;
 	
+	private MockMvc mvc;
+	
+	@Autowired
+	private WebApplicationContext context;
+	 
+    @BeforeEach
+    public void setup() {
+        mvc = MockMvcBuilders
+          .webAppContextSetup(context)
+          .apply(springSecurity())
+          .build();
+    }
+	
 	@Test
 	public void testCarga() throws TempoException {
 		ResponseEntity<Object> responseEntity = this.restTemplate
@@ -43,6 +61,17 @@ public class VideoControllerTest {
 		assertEquals(200, responseEntity.getStatusCodeValue());
 	}
 	
+	@Test
+	@WithMockUser
+	public void apagaRegistros() throws Exception {
+		mvc.perform(delete("http://localhost:" + port + "/api/tempo/")).andExpect(status().isNoContent());
+	}
+	
+	@Test
+	public void apagaRegistrosSemUsuario() throws Exception {
+		mvc.perform(delete("http://localhost:" + port + "/api/tempo/")).andExpect(status().isUnauthorized());
+	}
+
 	@Test
 	public void testAddUsuario() throws TempoException {
 		VideoDTO dto = new VideoDTO();
@@ -71,6 +100,8 @@ public class VideoControllerTest {
 		assertEquals(400, responseEntity.getStatusCodeValue());
 	}
 
+	
+	
 	private Double getDouble() {
 		double min = 200;
 		double max = 201;

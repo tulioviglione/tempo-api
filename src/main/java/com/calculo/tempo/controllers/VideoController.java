@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -79,14 +79,14 @@ public class VideoController {
 	
 	@DeleteMapping(value = "/")
 	public ResponseEntity<Response<String>> limpaRegistros() {
-		log.debug("Apagando banco");
+		log.debug("Apagando registros");
 		
 		Response<String> response = new Response<>();
 		
 		try {
 			videoService.apagaTodosRegistros();
 			response.setData("Registros apagados");
-			return ResponseEntity.ok(response);
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
 		} catch (Exception e) {
 			response.setData("Erro ao limpar banco");
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
