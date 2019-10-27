@@ -1,0 +1,1 @@
+web: java -Dserver.port=$PORT -Dspring.profiles.acitve=prod - jar target/tempo-0.0.1-SNAPSHOT.jar
