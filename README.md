@@ -58,13 +58,13 @@ Aplicação possui funcionalidade caso deseje ser adicionado novos usuários
 Requisição post realiza durante 60 segundo a carga de dados atualizada no sistema para teste.
 
 > Requisição Post
-> https://tempos-api.herokuapp.com/realizaCarga
+> https://tempos-api.herokuapp.com/api/tempo/realizaCarga
 
 ### Adição de registro
 endpoint a ser executado quando um video for inserido.
 
 > Resquisição Post
-> https://tempos-api.herokuapp.com/adicionaRegistro
+> https://tempos-api.herokuapp.com/api/tempo/adicionaRegistro
 
 ```
 {
@@ -78,7 +78,7 @@ endpoint a ser executado quando um video for inserido.
 endpoint principal, retorna as estatisticas com base nos ultimos 60 segundos
  
 > Requisição get
-> https://tempos-api.herokuapp.com/
+> https://tempos-api.herokuapp.com/api/tempo/
 
 Exemplo retorno
 
@@ -101,6 +101,6 @@ Endpoint responsável por apagar todos os registros de tempo inseridos.
 > Para apagar os registros é necessário informar um token, o mesmo pode ser obtido pelo usuário auxiliar previamente cadastrado
 
 > Requisição delete
-> https://tempos-api.herokuapp.com/
+> https://tempos-api.herokuapp.com/api/tempo/
 
 
