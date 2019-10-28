@@ -9,6 +9,7 @@
 - JUnit 5
 - Swagger (Habilitado somente no ambiente de desenvolvimento)
 - H2 (banco em memoria)
+- Versionamento de banco com Flyway
 
 ### Informações aplicação
 - Aplicação publicada no Heroku.
