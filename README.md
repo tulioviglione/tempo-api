@@ -16,9 +16,6 @@
 - Execução de testes unitários no TravisCI
 - Verificação da qualidade de código com SonarCloud
 
-### Link Heroku
-https://tempos-api.herokuapp.com/
-
 ### Usuário
 Para auxiliar nos teste a aplicação ja adiciona um usuário no banco.
 Somente o método DELETE exige um usuário autenticado no sistema para execução.
